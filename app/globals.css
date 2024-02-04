@@ -1,3 +1,10 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+input {
+    border: solid 1px black;
+}
+button[type="submit"] {
+    border: solid 1px black;
+}

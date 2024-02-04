@@ -1,7 +1,8 @@
-import Image from "next/image";
-
-export default function Home() {
+import {getJWT} from "@/utils/userSession";
+export default async function Home() {
+  const jwt = await getJWT();
   return (
-    <h1>Welcome</h1>
+
+    <h1>Code: {jwt}</h1>
   );
 }

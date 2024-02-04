@@ -1,24 +1,27 @@
-"use client"
-import axios from "axios";
-
-//TODO: expiration date
-const baseUrl = "http://127.0.0.1:3000"
-export async function login(email, password, remember=false) {
-    let instance = axios.create({
-        baseURL: baseUrl,
-        timeout: 30000,
-        timeoutErrorMessage: "Time out"
-    })
-    let res =  await instance.post("/login", {
-        user: {
-            email: email,
-            password: password
+"use server";
+import Requests from "@/utils/requests";
+const api = new Requests("http://127.0.0.1:3000");
+export async function login(email, password) {
+    let res = await api.post("/login", {
+        body: {
+            user: {
+                email: email,
+                password: password
+            }
         }
-    })
-    return res.headers.getAuthorization()
-
+    });
+    return res.headers.get('authorization');
 }
 
 export async function signup(name, email, password) {
-    //TODO
+    let res = await api.post("/signup", {
+        body: {
+            user: {
+                name: name,
+                email: email,
+                password: password
+            }
+        }
+    });
+    return res.headers.get('authorization')
 }

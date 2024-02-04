@@ -1,11 +1,28 @@
 import Link from 'next/link'
-
-export default function Header() {
+import {getUser} from "@/services/user";
+import {getUserId, signedIn} from "@/utils/userSession";
+import {cookies} from "next/headers";
+export default async  function Header() {
+    const signed = await signedIn();
+    let user;
+    if(signed) {
+        user = await getUser(await getUserId());
+    }
     return (
         <nav className="bg-gray-500">
-            <h1>Music App</h1>
-            <Link href="/login/">Log in</Link>
-            <Link href="/signup/">Sign up</Link>
+            <Link href="/">Music App </Link>
+            {signed ?
+                <>
+                    <h1>{user.name}</h1>
+                    <Link href="/logout">Log out</Link>
+                </>
+            :
+                <>
+                    <Link href="/login/">Log in</Link>
+                    <Link href="/signup/">Sign up</Link>
+                </>
+            }
         </nav>
     )
 }
+
