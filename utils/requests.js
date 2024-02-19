@@ -15,12 +15,16 @@ export default class Requests {
         if(!res.ok) throw Error(res.statusText);
         return res;
     }
-    async post(path, args={body:{}, headers:{}, next:{}}) {
+    async post(path, args={body:{}, headers:{}, next:{}, noJSON: false}) {
         let res = await fetch(`${this.url}${path}`, {
             method: "POST",
-            body: JSON.stringify(args.body),
+            body: args.noJSON ? args.body : JSON.stringify(args.body),
             headers: {
-                'Content-Type': 'application/json;charset=utf-8',
+                'Content-Type': !args.headers['Content-Type']
+                    ?
+                    'application/json;charset=utf-8'
+                    :
+                    args.headers['Content-Type'],
                 ...args.headers
             },
             next: {

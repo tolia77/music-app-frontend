@@ -2,7 +2,7 @@
 import {getJWT} from "@/utils/userSession";
 import Requests from "@/utils/requests";
 
-let api = new Requests("http://localhost:3000")
+let api = new Requests("http://localhost:3000");
 export async function getUser(id) {
     let res = await api.get(`/users/${id}}`, {
         headers: {
@@ -13,4 +13,4 @@ export async function getUser(id) {
         }
     });
     return await res.json();
-};
+}

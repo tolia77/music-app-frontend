@@ -7,5 +7,4 @@ export default function Logout() {
     deleteCookies().then(() => {
         router.push('/')
     })
-
 }

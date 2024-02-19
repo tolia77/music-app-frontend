@@ -1,4 +1,4 @@
-import {getUser} from "@/services/user";
+import {getUser} from "@/services/users";
 export const revalidate = 500;
 export default async function User({params}) {
 

@@ -1,7 +1,6 @@
 import Link from 'next/link'
-import {getUser} from "@/services/user";
+import {getUser} from "@/services/users";
 import {getUserId, signedIn} from "@/utils/userSession";
-import {cookies} from "next/headers";
 export default async  function Header() {
     const signed = await signedIn();
     let user;
