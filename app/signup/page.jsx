@@ -7,6 +7,7 @@ export default function Signup() {
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [status, setStatus] = useState('');
     const router = useRouter();
     function handleChangeName(e) {
         setName(e.target.value);
@@ -23,14 +24,22 @@ export default function Signup() {
             saveCookies(jwt).then(() => {
                 router.push("/");
             });
-        });
+        }).catch(e => {
+            const error = e.message;
+            console.log(e);
+            const responseCode = error.split(' ')[0];
+            if(responseCode === "422") {
+                setStatus('Invalid data')
+            }
+        })
     }
     return(
         <>
             <h1>Sign up</h1>
+            <h1>{status}</h1>
             <form onSubmit={handleSubmit}>
                 <label htmlFor="name">Name</label>
-                <input id="name" type="text" value={name} onChange={handleChangeName} required/>
+                <input id="name" type="text" value={name} onChange={handleChangeName} required maxLength="32"/>
                 <br/>
                 <label htmlFor="email">Email</label>
                 <input id="email" type="email" value={email} onChange={handleChangeEmail} required/>

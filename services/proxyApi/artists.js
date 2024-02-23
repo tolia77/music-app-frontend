@@ -1,13 +1,12 @@
 "use client";
 import Requests from "@/utils/requests";
 import {getJWT} from "@/utils/userSession";
-
-let proxyApi = new Requests("");
+const api = new Requests("");
 export function createArtist(name, image) {
     let formData = new FormData();
     formData.append('artist[name]', name);
     formData.append('artist[avatar]', image);
-    let result = fetch("/artists/create/api", {
+    return fetch("/artists/create/api", {
         method: 'POST',
         body: formData,
         headers: {
@@ -20,5 +19,4 @@ export function createArtist(name, image) {
 
         return res.json();
     });
-    return result;
 }

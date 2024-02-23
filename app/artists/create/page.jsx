@@ -1,7 +1,6 @@
 "use client";
 import {createArtist} from "@/services/proxyApi/artists";
 import {useState} from "react";
-import {getJWT} from "@/utils/userSession";
 
 export default function ArtistsCreate() {
     const [name, setName] = useState('');
@@ -11,13 +10,10 @@ export default function ArtistsCreate() {
     }
     function handleChangeImage(e) {
         setImage(e.target.files[0]);
-        console.log(image);
     }
     function handleSubmit(e) {
         e.preventDefault();
-        createArtist(name, image).then((res) => {
-            console.log(res);
-        })
+        createArtist(name, image);
 
     }
     return (
@@ -25,7 +21,7 @@ export default function ArtistsCreate() {
             <h1>Create artist</h1>
             <form onSubmit={handleSubmit}>
                 <label htmlFor="name">Name</label>
-                <input id="name" type="text" onChange={handleChangeName} required />
+                <input id="name" type="text" onChange={handleChangeName} required maxLength="32" />
                 <br/>
                 <label htmlFor="image">Image</label>
                 <input type="file" onChange={handleChangeImage}/>

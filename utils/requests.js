@@ -3,9 +3,10 @@ export default class Requests {
         this.url = url;
     }
     async get(path, args={headers:{}, next:{}}) {
+        args.headers ??= {};
+        args.headers['Content-Type'] ??= 'application/json;charset=utf-8';
         let res = await fetch(`${this.url}${path}`, {
             headers: {
-                'Content-Type': 'application/json;charset=utf-8',
                 ...args.headers
             },
             next: {
@@ -16,22 +17,19 @@ export default class Requests {
         return res;
     }
     async post(path, args={body:{}, headers:{}, next:{}, noJSON: false}) {
+        args.headers ??= {};
+        args.headers['Content-Type'] ??= 'application/json;charset=utf-8';
         let res = await fetch(`${this.url}${path}`, {
             method: "POST",
             body: args.noJSON ? args.body : JSON.stringify(args.body),
             headers: {
-                'Content-Type': !args.headers['Content-Type']
-                    ?
-                    'application/json;charset=utf-8'
-                    :
-                    args.headers['Content-Type'],
                 ...args.headers
             },
             next: {
                 ...args.next
             }
         });
-        if(!res.ok) throw Error(res.statusText);
+        if(!res.ok) throw Error(`${res.status} ${res.statusText}`);
         return res;
     }
 }

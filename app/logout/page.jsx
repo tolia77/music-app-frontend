@@ -6,5 +6,5 @@ export default function Logout() {
     const router = useRouter();
     deleteCookies().then(() => {
         router.push('/')
-    })
+    });
 }

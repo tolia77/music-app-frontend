@@ -6,6 +6,7 @@ import {useRouter} from "next/navigation";
 export default function Login() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [status, setStatus] = useState('');
     const router = useRouter();
     function handleSubmit(e) {
         e.preventDefault();
@@ -13,6 +14,15 @@ export default function Login() {
             saveCookies(jwt).then(() => {
                 router.push("/");
             })
+        }).catch(e => {
+            const error = e.message;
+            const responseCode = error.split(' ')[0];
+            if(responseCode === "401") {
+                setStatus('Wrong email or password');
+            }
+            else {
+                setStatus('Error')
+            }
         })
     }
     function handleChangeEmail(e) {
@@ -24,6 +34,7 @@ export default function Login() {
     return (
         <>
             <h1>Log in</h1>
+            <h1 className="text-red-600 font-bold">{status}</h1>
             <form onSubmit={handleSubmit}>
                 <label htmlFor="input-email">Email</label>
                 <input id="input-email" type="email" value={email} onChange={handleChangeEmail} required></input>
