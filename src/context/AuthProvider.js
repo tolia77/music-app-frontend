@@ -1,6 +1,6 @@
 import {createContext, useState} from "react";
 import {useCookies} from "react-cookie";
-import {loginRequest, signupRequest} from "../services/auth";
+import {loginRequest, logoutRequest, signupRequest} from "../services/auth";
 import {jwtDecode} from "jwt-decode";
 import {getUserRequest} from "../services/users";
 
@@ -27,8 +27,10 @@ export default function AuthProvider({children}) {
         return !!token;
     }
     function logout() {
-        removeCookie("jwt", {path: "/", sameSite: "strict"});
-        setToken("");
+        logoutRequest(token).then(() => {
+            removeCookie("jwt", {path: "/", sameSite: "strict"});
+            setToken("");
+        });
     }
     return <AuthContext.Provider value={{token, login, signedIn, currentUser, logout, signUp}}>{children}</AuthContext.Provider>
 }

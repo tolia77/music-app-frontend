@@ -23,3 +23,12 @@ export async function signupRequest(name, email, password) {
     });
     return res.headers.get('authorization')
 }
+
+export async function logoutRequest(jwt) {
+    let res = await api.delete("/logout", {
+        headers: {
+            Authorization: jwt
+        }
+    });
+    return res;
+}
