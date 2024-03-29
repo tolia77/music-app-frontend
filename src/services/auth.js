@@ -1,5 +1,4 @@
 import {api} from "./config"
-//TODO: return full info about user
 export async function loginRequest(email, password) {
     let res = await api.post("/login", {
         body: {
@@ -9,10 +8,7 @@ export async function loginRequest(email, password) {
             }
         }
     });
-    return {
-        user: (await res.json()).status.data.user,
-        jwt: res.headers.get('authorization')
-    }
+    return res.headers.get('authorization')
 }
 
 export async function signupRequest(name, email, password) {
