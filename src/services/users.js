@@ -7,3 +7,17 @@ export async function getUserRequest(id, jwt) {
     });
     return await res.json();
 }
+
+export async function updateUserRequest(jwt, data={}) {
+    let res = await api.patch("/signup", {
+        headers: {
+            Authorization: jwt
+        },
+        body: {
+            user: {
+                ...data
+            }
+        }
+    });
+    return await res.json();
+}

@@ -8,6 +8,7 @@ import AuthProvider from "./context/AuthProvider";
 import Signup from "./pages/Signup";
 import UserShow from "./pages/users/UserShow";
 import RequireAuthorization from "./components/RequireAuthorization";
+import UserEdit from "./pages/users/UserEdit";
 
 function App() {
     //TODO: require authorization
@@ -23,6 +24,11 @@ function App() {
                           <Route path=":userId" element={
                               <RequireAuthorization>
                                 <UserShow/>
+                              </RequireAuthorization>
+                          }/>
+                          <Route path="edit" element={
+                              <RequireAuthorization>
+                                  <UserEdit/>
                               </RequireAuthorization>
                           }/>
                       </Route>

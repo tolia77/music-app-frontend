@@ -1,20 +1,11 @@
 import "../assets/styles/Sidebar.scss"
-import {useAuth} from "../hooks/auth";
+import {useAuth, useCurrentUser} from "../hooks/auth";
 import {Link, useNavigate} from "react-router-dom";
-import {useEffect, useState} from "react";
 export default function Sidebar() {
     const auth = useAuth();
-    const [user, setUser] = useState({});
+    const user = useCurrentUser();
     const navigate = useNavigate();
-    useEffect(() => {
-        async function getCurrentUser() {
-            if(auth.signedIn()) {
-                const u = await auth.currentUser();
-                setUser(u)
-            }
-        }
-        getCurrentUser()
-    }, [auth]);
+
     //
     return(
         <div id="sidebar">
